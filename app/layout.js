@@ -16,9 +16,9 @@ const lato = Lato({
 });
 
 export const metadata = {
-  title: "pagent — the parts counter that never misses a call",
+  title: "PartsPanda — the parts counter that never misses a call",
   description:
-    "pagent answers every call to your auto parts counter, checks real inventory, and quotes price and availability 24/7.",
+    "PartsPanda answers every call to your auto parts counter, checks real inventory, and quotes price and availability 24/7.",
 };
 
 export default function RootLayout({ children }) {

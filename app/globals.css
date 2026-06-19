@@ -37,6 +37,38 @@
   animation: marquee 40s linear infinite reverse;
 }
 
+/* Hero call demo: each caption line rises in from the bottom. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 320ms ease-out both;
+}
+
+/* Voice waveform — bars bounce up and down (scale, so it works at any height). */
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-eq {
+  transform-origin: center;
+  animation: eq 900ms ease-in-out infinite;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

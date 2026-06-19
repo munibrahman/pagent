@@ -1,7 +1,9 @@
-// pagent — landing page
+// PartsPanda — landing page
 // Palette: bg #F3F2E6 · alt panel #ECEADA · text #212427
 // Type: Hedvig Letters Serif (headers) · Lato (everything else)
 // Sections alternate: transparent (bleeds to bg) → alt panel → transparent ...
+
+import CallDemo, { RETURNING_CALL } from "./components/CallDemo";
 
 function Section({ id, alt = false, children }) {
   return (
@@ -13,7 +15,7 @@ function Section({ id, alt = false, children }) {
   );
 }
 
-function CallAgentButton({ children = "Call the agent →" }) {
+function CallAgentButton({ children = "Try it yourself" }) {
   // Primary CTA — wired to the live Vapi demo number (placeholder for now).
   return (
     <a
@@ -73,9 +75,8 @@ function MarqueeRow({ items, reverse = false }) {
   return (
     <div className="overflow-hidden">
       <div
-        className={`flex w-max hover:[animation-play-state:paused] ${
-          reverse ? "animate-marquee-reverse" : "animate-marquee"
-        }`}
+        className={`flex w-max hover:[animation-play-state:paused] ${reverse ? "animate-marquee-reverse" : "animate-marquee"
+          }`}
       >
         {[...items, ...items].map((name, i) => (
           <span
@@ -115,7 +116,7 @@ export default function Home() {
     <main className="flex flex-col">
       {/* ── NAV ───────────────────────────────────────────── */}
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5">
-        <span className="font-serif text-xl">pagent</span>
+        <span className="font-serif text-xl">PartsPanda</span>
         <div className="flex items-center gap-6 text-sm">
           <a href="#how" className="hover:opacity-70">
             How it works
@@ -129,35 +130,43 @@ export default function Home() {
 
       {/* ── HOOK ──────────────────────────────────────────── */}
       <Section>
-        <h1 className="max-w-3xl font-serif text-4xl leading-[1.05] sm:text-6xl">
-          Stop losing sales to a ringing phone.
-        </h1>
-        <p className="mt-5 max-w-xl text-lg text-foreground/70">
-          pagent answers every call to your parts counter, checks your real
-          inventory, and quotes price and availability — 24/7. No hold music.
-          No missed orders.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-5">
-          <CallAgentButton />
-          <a href="#pricing" className="text-sm underline underline-offset-4">
-            See pricing
-          </a>
+        <div className="grid items-center gap-10 lg:grid-cols-5">
+          {/* left — the pitch */}
+          <div className="lg:col-span-3">
+            <h1 className="font-serif text-4xl leading-[1.05] sm:text-6xl">
+              Stop losing sales to a ringing phone.
+            </h1>
+            <p className="mt-5 max-w-xl text-lg text-foreground/70">
+              PartsPanda answers every call to your parts counter, checks your real
+              inventory, and quotes price and availability — 24/7. No hold
+              music. No missed orders.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <CallAgentButton />
+              <a href="#pricing" className="text-sm underline underline-offset-4">
+                See pricing
+              </a>
+            </div>
+          </div>
+
+          {/* right — the live call demo (floats, no card) */}
+          <div className="lg:col-span-2">
+            <CallDemo />
+          </div>
         </div>
 
         {/* Integrations carousel — the "we connect to what you run" signal */}
-        <SystemsMarquee />
+        {/* <SystemsMarquee /> */}
       </Section>
 
       {/* ── THE STAKES ────────────────────────────────────── */}
       <Section alt>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Every call you miss is a sale at the next store.
+          Inbound Automation
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
           Your counter is slammed. The phone rings twice and stops — that
-          mechanic already dialed the competitor down the road. After close,
-          nobody&apos;s there at all. Those are orders you&apos;ll never even
-          know you lost.
+          customer already dialed the competitor down the road.
         </p>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[
@@ -171,12 +180,13 @@ export default function Home() {
             </div>
           ))}
         </div>
+        <p className="mt-5 max-w-xl text-foreground/70">Partspanda makes sure you never miss another call. Even after your store is closed.</p>
       </Section>
 
       {/* ── THE FIX ───────────────────────────────────────── */}
       <Section>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Meet pagent — the counter person who never clocks out.
+          Meet PartsPanda — the counter person who never clocks out.
         </h2>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[
@@ -192,15 +202,50 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── PROOF / LIVE CALL (primary conversion) ────────── */}
+      {/* ── MEMORY / RETENTION (returning caller) ─────────── */}
       <Section alt>
+        <div className="grid items-center gap-10 lg:grid-cols-5">
+          {/* left — the pitch */}
+          <div className="lg:col-span-3">
+            <Eyebrow>Customer memory</Eyebrow>
+            <h2 className="mt-3 max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
+              Remembers your customers - so they keep coming back.
+            </h2>
+            <p className="mt-5 max-w-xl text-foreground/70">
+              What's the closest thing to everyone? their name. Remember it once and they will keep coming back.
+            </p>
+            <ul className="mt-8 space-y-3 text-foreground/70">
+              <li>
+                <span className="font-bold text-foreground">Knows who&apos;s calling</span>{" "}
+                — greets returning callers by name.
+              </li>
+              <li>
+                <span className="font-bold text-foreground">Recalls their vehicle</span>{" "}
+                — “calling about the 2009 Camry again?”
+              </li>
+              <li>
+                <span className="font-bold text-foreground">Turns calls into regulars</span>{" "}
+                — familiarity is retention, and retention is recurring revenue.
+              </li>
+            </ul>
+          </div>
+
+          {/* right — returning-caller demo (fade matches the oatmeal panel) */}
+          <div className="lg:col-span-2">
+            <CallDemo script={RETURNING_CALL} fadeClass="from-surface-alt" />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── PROOF / LIVE CALL (primary conversion) ────────── */}
+      <Section>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
           Don&apos;t take our word for it. Call it.
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
           Pick up your phone and talk to the agent right now. Ask it for a part.
         </p>
-        <div className="mt-10 rounded-2xl border border-[#212427]/15 bg-background p-8 text-center">
+        <div className="mt-10 rounded-2xl border border-[#212427]/15 bg-surface-alt p-8 text-center">
           <Eyebrow>Live agent</Eyebrow>
           <div className="mt-3 font-serif text-4xl">(403) 000-0000</div>
           <div className="mt-7">
@@ -210,14 +255,14 @@ export default function Home() {
       </Section>
 
       {/* ── HOW IT WORKS ──────────────────────────────────── */}
-      <Section id="how">
+      <Section id="how" alt>
         <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
           How it works
         </h2>
         <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[
             ["1", "Caller asks for a part", "“You got front brake pads for a 2015 Camry?”"],
-            ["2", "pagent checks your inventory", "Understands the request, looks up live stock."],
+            ["2", "PartsPanda checks your inventory", "Understands the request, looks up live stock."],
             ["3", "It closes the loop", "Quotes price + availability, or takes the order."],
           ].map(([n, title, body]) => (
             <li key={n} className={cardClass}>
@@ -230,7 +275,7 @@ export default function Home() {
       </Section>
 
       {/* ── PRICING (Stripe TODO) ─────────────────────────── */}
-      <Section id="pricing" alt>
+      <Section id="pricing">
         <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
           Pricing
         </h2>
@@ -246,7 +291,7 @@ export default function Home() {
           ].map(([name, price, feats]) => (
             <div
               key={name}
-              className="flex flex-col rounded-xl border border-[#212427]/12 bg-background p-6"
+              className="flex flex-col rounded-xl border border-[#212427]/12 bg-surface-alt p-6"
             >
               <div className="font-bold">{name}</div>
               <div className="mt-1 font-serif text-3xl">{price}</div>
@@ -267,7 +312,7 @@ export default function Home() {
       </Section>
 
       {/* ── FINAL CTA ─────────────────────────────────────── */}
-      <Section>
+      <Section alt>
         <h2 className="font-serif text-3xl leading-tight sm:text-5xl">
           Never miss another order.
         </h2>
@@ -277,9 +322,9 @@ export default function Home() {
       </Section>
 
       {/* ── FOOTER ────────────────────────────────────────── */}
-      <footer className="bg-surface-alt">
+      <footer className="border-t border-[#212427]/10">
         <div className="mx-auto w-full max-w-5xl px-6 py-8 text-sm text-foreground/50">
-          pagent — built for independent auto parts stores.
+          PartsPanda — built for independent auto parts stores.
         </div>
       </footer>
     </main>
