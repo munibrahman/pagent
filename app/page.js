@@ -100,6 +100,39 @@ function Eyebrow({ children }) {
   );
 }
 
+// Cartoon panda peeking over the wordmark — looking right at you.
+function PandaPeek({ className = "" }) {
+  return (
+    <svg viewBox="0 0 100 82" className={className} aria-hidden>
+      {/* ears */}
+      <circle cx="27" cy="24" r="14" fill="#212427" />
+      <circle cx="73" cy="24" r="14" fill="#212427" />
+      {/* face */}
+      <ellipse cx="50" cy="42" rx="33" ry="29" fill="#fff" stroke="#212427" strokeWidth="3" />
+      {/* eye patches */}
+      <ellipse cx="37" cy="42" rx="9" ry="12" fill="#212427" transform="rotate(-20 37 42)" />
+      <ellipse cx="63" cy="42" rx="9" ry="12" fill="#212427" transform="rotate(20 63 42)" />
+      {/* eyes (looking at you) */}
+      <circle cx="38" cy="43" r="4.5" fill="#fff" />
+      <circle cx="62" cy="43" r="4.5" fill="#fff" />
+      <circle cx="39" cy="44" r="2.3" fill="#212427" />
+      <circle cx="61" cy="44" r="2.3" fill="#212427" />
+      {/* nose + mouth */}
+      <ellipse cx="50" cy="56" rx="5" ry="3.5" fill="#212427" />
+      <path
+        d="M50 59 Q45 64 41 61 M50 59 Q55 64 59 61"
+        fill="none"
+        stroke="#212427"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      {/* little paws gripping the edge */}
+      <circle cx="19" cy="75" r="7" fill="#212427" />
+      <circle cx="81" cy="75" r="7" fill="#212427" />
+    </svg>
+  );
+}
+
 // Memory section — the three steps that weave into retention growth.
 const MEMORY_STEPS = [
   ["Knows who's calling", "Greets returning callers by name."],
@@ -290,7 +323,12 @@ export default function Home() {
     <main className="flex flex-col">
       {/* ── NAV ───────────────────────────────────────────── */}
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5">
-        <span className="font-serif text-xl">PartsPanda</span>
+        <span className="relative inline-block">
+          <PandaPeek className="pointer-events-none absolute -top-4 left-1/2 h-7 w-auto -translate-x-1/2" />
+          <span className="font-brand text-xl font-extrabold tracking-tight">
+            PartsPanda
+          </span>
+        </span>
         <div className="flex items-center gap-6 text-sm">
           <a href="#how" className="hover:opacity-70">
             How it works
@@ -311,7 +349,7 @@ export default function Home() {
               Stop losing sales to a ringing phone.
             </h1>
             <p className="mt-5 max-w-xl text-lg text-foreground/70">
-              PartsPanda answers every call, remembers your customer, checks your real
+              Built for your auto-parts store, PartsPanda answers every call, remembers your customer, checks your real
               inventory, and quotes price and availability - 24/7. No hold
               music. No missed orders.
             </p>
@@ -357,7 +395,7 @@ export default function Home() {
       </Section>
 
       {/* ── MEMORY / RETENTION ────────────────────────────── */}
-      <Section alt>
+      <Section>
         <Eyebrow>Customer memory</Eyebrow>
         <h2 className="mt-3 max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
           Remember your customers - so they keep coming back.
@@ -372,7 +410,7 @@ export default function Home() {
             const isLast = i === MEMORY_STEPS.length - 1;
             return (
               <Fragment key={title}>
-                <div className="flex flex-1 flex-col rounded-xl border border-[#212427]/15 bg-background p-5 lg:aspect-video">
+                <div className="flex flex-1 flex-col rounded-xl border border-[#212427]/10 bg-white p-5 shadow-sm lg:aspect-video">
                   <div className="flex items-start justify-between">
                     <span className="font-serif text-2xl text-foreground/30">{i + 1}</span>
                     {isLast && (
@@ -407,14 +445,14 @@ export default function Home() {
       </Section>
 
       {/* ── PROOF / LIVE CALL (primary conversion) ────────── */}
-      <Section>
+      <Section alt>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
           Don't believe us? Give it a call!
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
           Pick up your phone and talk to someone that never sleeps.
         </p>
-        <div className="mt-10 rounded-2xl border border-[#212427]/15 bg-surface-alt p-8 text-center">
+        <div className="mt-10 rounded-2xl border border-[#212427]/10 bg-white p-8 text-center shadow-sm">
           <Eyebrow>Live agent</Eyebrow>
           <div className="mt-3 font-serif text-4xl">(403) 000-0000</div>
           <div className="mt-7">
@@ -424,7 +462,7 @@ export default function Home() {
       </Section>
 
       {/* ── HOW IT WORKS ──────────────────────────────────── */}
-      <Section id="how" alt>
+      <Section id="how">
         <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
           How it works
         </h2>
@@ -444,7 +482,7 @@ export default function Home() {
       </Section>
 
       {/* ── PRICING ───────────────────────────────────────── */}
-      <Section id="pricing">
+      <Section id="pricing" alt>
         <h2 className="font-serif text-2xl leading-tight sm:text-4xl">
           A single missed call could cost you more than a months subscription.
         </h2>
@@ -459,7 +497,7 @@ export default function Home() {
       </Section>
 
       {/* ── FINAL CTA ─────────────────────────────────────── */}
-      <Section alt>
+      <Section>
         <h2 className="font-serif text-3xl leading-tight sm:text-5xl">
           Never miss another order.
         </h2>
@@ -469,7 +507,7 @@ export default function Home() {
       </Section>
 
       {/* ── FOOTER ────────────────────────────────────────── */}
-      <footer className="border-t border-[#212427]/10">
+      <footer className="bg-surface-alt">
         <div className="mx-auto w-full max-w-5xl px-6 py-8 text-sm text-foreground/50">
           PartsPanda — built for independent auto parts stores.
         </div>

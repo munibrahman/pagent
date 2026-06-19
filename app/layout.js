@@ -1,4 +1,4 @@
-import { Hedvig_Letters_Serif, Lato } from "next/font/google";
+import { Hedvig_Letters_Serif, Inter, Lato } from "next/font/google";
 import "./globals.css";
 
 // Headers
@@ -15,6 +15,12 @@ const lato = Lato({
   weight: ["300", "400", "700", "900"],
 });
 
+// Wordmark / brand
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
 export const metadata = {
   title: "PartsPanda — the parts counter that never misses a call",
   description:
@@ -25,7 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${hedvig.variable} ${lato.variable} h-full antialiased`}
+      className={`${hedvig.variable} ${lato.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

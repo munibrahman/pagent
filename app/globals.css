@@ -12,6 +12,7 @@
   --color-surface-alt: var(--surface-alt);
   --font-sans: var(--font-lato); /* body — Lato */
   --font-serif: var(--font-hedvig); /* headers — Hedvig Letters Serif */
+  --font-brand: var(--font-inter); /* wordmark — Inter */
 }
 
 /* Theme is intentionally undecided — single light canvas for the wireframe pass.
