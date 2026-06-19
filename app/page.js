@@ -20,7 +20,7 @@ function CallAgentButton({ children = "Try it yourself" }) {
   // Primary CTA — wired to the live Vapi demo number (placeholder for now).
   return (
     <a
-      href="tel:+14030000000"
+      href="tel:+19289889317"
       className="inline-flex items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-bold text-background transition-opacity hover:opacity-90"
     >
       {children}
@@ -135,9 +135,9 @@ function PandaPeek({ className = "" }) {
 
 // Memory section — the three steps that weave into retention growth.
 const MEMORY_STEPS = [
-  ["Knows who's calling", "Greets returning callers by name."],
-  ["Recalls their vehicle", "“Calling about the 2009 Camry again?”"],
-  ["Turns calls into regulars", "Familiarity is retention — and retention is recurring revenue."],
+  ["Knows who's calling", "Greet returning callers by name"],
+  ["Recall their vehicle", "Speed up lookup times"],
+  ["Turns calls into regulars", "Familiarity is retention and retention is recurring revenue."],
 ];
 
 // Animated weaving dashed line that connects the memory steps.
@@ -181,7 +181,8 @@ const PLANS = [
     tagline: "Everything you need to stop missing calls.",
     features: [
       "1 location",
-      "Up to 500 calls / mo",
+      "100 calls / mo included",
+      "Then $1.25 / call",
       "Answers every call, 24/7",
       "Live inventory lookup",
       "Lead capture",
@@ -197,7 +198,8 @@ const PLANS = [
     tagline: "Retention and insight that pay for themselves.",
     features: [
       "Up to 3 locations",
-      "Unlimited calls",
+      "240 calls / mo included",
+      "Then $1.25 / call",
       "Everything in Starter",
       "Customer memory",
       "VIN decode",
@@ -346,12 +348,11 @@ export default function Home() {
           {/* left — the pitch */}
           <div className="lg:col-span-3">
             <h1 className="font-serif text-4xl leading-[1.05] sm:text-6xl">
-              Stop losing sales to a ringing phone.
+              Every missed call goes to your competition
             </h1>
             <p className="mt-5 max-w-xl text-lg text-foreground/70">
-              Built for your auto-parts store, PartsPanda answers every call, remembers your customer, checks your real
-              inventory, and quotes price and availability - 24/7. No hold
-              music. No missed orders.
+              Your parts store needs someone that always picks calls, knows your customer, and quotes parts straight from your shelf — day or
+              night.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-5">
               <CallAgentButton />
@@ -371,11 +372,11 @@ export default function Home() {
       {/* ── THE STAKES ────────────────────────────────────── */}
       <Section alt>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Inbound Automation
+          Automate your inbound
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
-          Your counter is slammed. The phone rings twice and stops — that
-          customer already dialed the competitor down the road.
+          This is usually your biggest funnel. If the phone rings and drops or goes on hold — that
+          customer will call the competition down the road.
         </p>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {STAKES.map(({ big, small, up, colorClass }) => (
@@ -398,10 +399,10 @@ export default function Home() {
       <Section>
         <Eyebrow>Customer memory</Eyebrow>
         <h2 className="mt-3 max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Remember your customers - so they keep coming back.
+          Remember your customers
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
-          The sweetest thing to a anyone is their name, remember it once and you've got a customer for life.
+          Nothing beats a personal touch. Recall their name and purchase history to close sales faster.
         </p>
 
         {/* three steps weaving toward retention */}
@@ -447,14 +448,14 @@ export default function Home() {
       {/* ── PROOF / LIVE CALL (primary conversion) ────────── */}
       <Section alt>
         <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Don't believe us? Give it a call!
+          Try it for yourself
         </h2>
         <p className="mt-5 max-w-xl text-foreground/70">
-          Pick up your phone and talk to someone that never sleeps.
+          Say hello to your newest employee - that never sleeps.
         </p>
         <div className="mt-10 rounded-2xl border border-[#212427]/10 bg-white p-8 text-center shadow-sm">
           <Eyebrow>Live agent</Eyebrow>
-          <div className="mt-3 font-serif text-4xl">(403) 000-0000</div>
+          <div className="mt-3 font-serif text-4xl">(928) 988-9317</div>
           <div className="mt-7">
             <CallAgentButton>Call now</CallAgentButton>
           </div>
