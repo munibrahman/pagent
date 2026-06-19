@@ -69,6 +69,17 @@
   animation: eq 900ms ease-in-out infinite;
 }
 
+/* Weaving connector — dashes flow along the path. */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -11;
+  }
+}
+
+.animate-dash {
+  animation: dash 0.9s linear infinite;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

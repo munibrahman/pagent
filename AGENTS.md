@@ -102,3 +102,16 @@ in `globals.css`.
   `MarqueeRow`, `Eyebrow`) + data arrays mapped to markup.
 - Frontend builds against the `BACKEND_SPEC.md` endpoint shapes; those shapes are the
   contract and must not drift.
+
+## Deployment
+
+Live origin runs on the `naseeb` server (Ubuntu 24.04), alongside other sites.
+
+- **Server:** `root@100.122.53.106` (Tailscale), key `~/.ssh/naseeb-admin`. App process runs as user `deploy`.
+- **Path:** `/var/www/partspanda` (owned by `deploy`).
+- **Process:** pm2 app **`partspanda`** → `npm start` → `next start -p 3003` (cwd `/var/www/partspanda`); `pm2 save` persisted. Ports 3000/3001 are taken by other apps.
+- **nginx:** `/etc/nginx/sites-available/partspanda.lol` (symlinked in `sites-enabled`) → proxies `:443` to `127.0.0.1:3003`; `:80` and `www.` redirect to `https://partspanda.lol`.
+- **Domain:** `partspanda.lol`, behind Cloudflare. TLS via Cloudflare Origin cert at `/etc/ssl/cloudflare/partspanda.lol.pem` + `.key` (currently a **TEMP self-signed** cert — replace with the real Cloudflare Origin cert, then set Cloudflare SSL mode to Full (strict)).
+- **`.env.local`** (git-ignored) holds `NEXT_PUBLIC_STRIPE_STARTER_URL` / `NEXT_PUBLIC_STRIPE_PRO_URL` (Stripe test-mode Payment Links). `NEXT_PUBLIC_*` are inlined at **build** time, so the file must be present before `npm run build`.
+- **Redeploy:** tar/rsync the repo to `/var/www/partspanda` (include `.env.local`), then
+  `su - deploy -c "cd /var/www/partspanda && npm install && npm run build && pm2 restart partspanda"`.
