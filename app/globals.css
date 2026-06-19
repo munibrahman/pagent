@@ -86,3 +86,104 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/* ── Motion system ──────────────────────────────────────────
+   Slick, restrained, on-palette. Easing is a soft "ease-out-expo"
+   so things decelerate into place instead of stopping abruptly. */
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scroll reveal — starts hidden, slides + fades up when the
+   IntersectionObserver in <Reveal> adds .is-visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* On-load entrance for above-the-fold (hero) — no observer needed. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.85s var(--ease-out-expo) both;
+}
+
+/* Card hover — lifts off the page with a soft shadow. */
+.card-lift {
+  transition: transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo), border-color 0.35s ease;
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px -18px rgba(33, 36, 39, 0.28);
+}
+
+/* Buttons — gentle rise on hover, press on click. */
+.btn-press {
+  transition: transform 0.18s var(--ease-out-expo), opacity 0.2s ease,
+    box-shadow 0.3s ease;
+}
+.btn-press:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -12px rgba(33, 36, 39, 0.4);
+}
+.btn-press:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Sticky nav — translucent frosted bar once you start scrolling. */
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  backdrop-filter: saturate(1.1) blur(12px);
+  -webkit-backdrop-filter: saturate(1.1) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.nav-sticky.is-scrolled {
+  border-bottom-color: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+/* Respect users who'd rather not have motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-fade-up {
+    opacity: 1;
+    animation: none;
+  }
+  .card-lift:hover,
+  .btn-press:hover,
+  .btn-press:active {
+    transform: none;
+    box-shadow: none;
+  }
+}

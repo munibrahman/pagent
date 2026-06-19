@@ -5,6 +5,8 @@
 
 import { Fragment } from "react";
 import CallDemo from "./components/CallDemo";
+import Reveal from "./components/Reveal";
+import ScrollHeader from "./components/ScrollHeader";
 
 function Section({ id, alt = false, children }) {
   return (
@@ -21,7 +23,7 @@ function CallAgentButton({ children = "Try it yourself" }) {
   return (
     <a
       href="tel:+19289889317"
-      className="inline-flex items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-bold text-background transition-opacity hover:opacity-90"
+      className="btn-press inline-flex items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-bold text-background hover:opacity-90"
     >
       {children}
     </a>
@@ -29,7 +31,7 @@ function CallAgentButton({ children = "Try it yourself" }) {
 }
 
 const cardClass =
-  "rounded-xl border border-[#212427]/12 p-5";
+  "card-lift rounded-xl border border-[#212427]/12 bg-white p-5 shadow-sm";
 
 // Everything an independent auto parts store actually runs. Placeholder text
 // chips now → real logos in polish. Two rows, scrolling opposite directions.
@@ -283,7 +285,7 @@ function PlanCard({ plan }) {
   const { name, price, period, tagline, features, cta, href, featured } = plan;
   return (
     <div
-      className={`relative flex flex-col rounded-2xl bg-white p-7 ${featured
+      className={`card-lift relative flex h-full flex-col rounded-2xl bg-white p-7 ${featured
         ? "border-2 border-[#1D3A40] shadow-md"
         : "border border-[#212427]/10 shadow-sm"
         }`}
@@ -309,7 +311,7 @@ function PlanCard({ plan }) {
       </ul>
       <a
         href={href}
-        className={`mt-7 inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-bold transition-colors ${featured
+        className={`btn-press mt-7 inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-bold transition-colors ${featured
           ? "bg-foreground text-background hover:opacity-90"
           : "border border-foreground hover:bg-foreground hover:text-background"
           }`}
@@ -324,7 +326,7 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       {/* ── NAV ───────────────────────────────────────────── */}
-      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5">
+      <ScrollHeader className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5">
         <span className="relative inline-block">
           <PandaPeek className="pointer-events-none absolute -top-4 left-1/2 h-7 w-auto -translate-x-1/2" />
           <span className="font-brand text-xl font-extrabold tracking-tight">
@@ -332,35 +334,47 @@ export default function Home() {
           </span>
         </span>
         <div className="flex items-center gap-6 text-sm">
-          <a href="#how" className="hover:opacity-70">
+          <a href="#how" className="transition-opacity hover:opacity-70">
             How it works
           </a>
-          <a href="#pricing" className="hover:opacity-70">
+          <a href="#pricing" className="transition-opacity hover:opacity-70">
             Pricing
           </a>
           <CallAgentButton>Call the agent</CallAgentButton>
         </div>
-      </nav>
+      </ScrollHeader>
 
       {/* ── HOOK ──────────────────────────────────────────── */}
       <Section>
         <div className="grid items-center gap-10 lg:grid-cols-5">
-          {/* left — the pitch */}
+          {/* left — the pitch (staggered fade-up on load) */}
           <div className="lg:col-span-3">
-            <h1 className="font-serif text-4xl leading-[1.05] sm:text-6xl">
+            <h1
+              className="animate-fade-up font-serif text-4xl leading-[1.05] sm:text-6xl"
+              style={{ animationDelay: "80ms" }}
+            >
               Every missed call goes to your competition
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-foreground/70">
+            <p
+              className="animate-fade-up mt-5 max-w-xl text-lg text-foreground/70"
+              style={{ animationDelay: "220ms" }}
+            >
               Your parts store needs someone that always picks calls, knows your customer, and quotes parts straight from your shelf — day or
               night.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-5">
+            <div
+              className="animate-fade-up mt-8 flex flex-wrap items-center gap-5"
+              style={{ animationDelay: "360ms" }}
+            >
               <CallAgentButton />
             </div>
           </div>
 
           {/* right — the live call demo (floats, no card) */}
-          <div className="lg:col-span-2">
+          <div
+            className="animate-fade-up lg:col-span-2"
+            style={{ animationDelay: "480ms" }}
+          >
             <CallDemo />
           </div>
         </div>
@@ -371,39 +385,44 @@ export default function Home() {
 
       {/* ── THE STAKES ────────────────────────────────────── */}
       <Section alt>
-        <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
+        <Reveal as="h2" className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
           Automate your inbound
-        </h2>
-        <p className="mt-5 max-w-xl text-foreground/70">
+        </Reveal>
+        <Reveal as="p" delay={80} className="mt-5 max-w-xl text-foreground/70">
           This is usually your biggest funnel. If the phone rings and drops or goes on hold — that
           customer will call the competition down the road.
-        </p>
+        </Reveal>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {STAKES.map(({ big, small, up, colorClass }) => (
-            <div
+          {STAKES.map(({ big, small, up, colorClass }, i) => (
+            <Reveal
               key={small}
-              className="flex flex-col rounded-xl border border-[#212427]/10 bg-white p-6 shadow-sm"
+              delay={i * 110}
+              className="card-lift flex h-full flex-col rounded-xl border border-[#212427]/10 bg-white p-6 shadow-sm"
             >
               <div className="flex items-start justify-between">
                 <span className="font-serif text-4xl">{big}</span>
                 <Trend up={up} colorClass={colorClass} />
               </div>
               <span className="mt-2 text-sm text-foreground/60">{small}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
-        <p className="mt-5 max-w-xl text-foreground/70">Partspanda makes sure you never miss another call. Even after your store is closed.</p>
+        <Reveal as="p" delay={120} className="mt-5 max-w-xl text-foreground/70">
+          Partspanda makes sure you never miss another call. Even after your store is closed.
+        </Reveal>
       </Section>
 
       {/* ── MEMORY / RETENTION ────────────────────────────── */}
       <Section>
-        <Eyebrow>Customer memory</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-          Remember your customers
-        </h2>
-        <p className="mt-5 max-w-xl text-foreground/70">
-          Nothing beats a personal touch. Recall their name and purchase history to close sales faster.
-        </p>
+        <Reveal>
+          <Eyebrow>Customer memory</Eyebrow>
+          <h2 className="mt-3 max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
+            Remember your customers
+          </h2>
+          <p className="mt-5 max-w-xl text-foreground/70">
+            Nothing beats a personal touch. Recall their name and purchase history to close sales faster.
+          </p>
+        </Reveal>
 
         {/* three steps weaving toward retention */}
         <div className="mt-14 flex flex-col gap-6 lg:flex-row lg:items-center">
@@ -411,7 +430,7 @@ export default function Home() {
             const isLast = i === MEMORY_STEPS.length - 1;
             return (
               <Fragment key={title}>
-                <div className="flex flex-1 flex-col rounded-xl border border-[#212427]/10 bg-white p-5 shadow-sm lg:aspect-video">
+                <Reveal delay={i * 140} className="card-lift flex flex-1 flex-col rounded-xl border border-[#212427]/10 bg-white p-5 shadow-sm lg:aspect-video">
                   <div className="flex items-start justify-between">
                     <span className="font-serif text-2xl text-foreground/30">{i + 1}</span>
                     {isLast && (
@@ -437,7 +456,7 @@ export default function Home() {
                     <div className="font-bold">{title}</div>
                     <div className="mt-1 text-sm text-foreground/60">{body}</div>
                   </div>
-                </div>
+                </Reveal>
                 {!isLast && <WeaveConnector />}
               </Fragment>
             );
@@ -447,64 +466,67 @@ export default function Home() {
 
       {/* ── PROOF / LIVE CALL (primary conversion) ────────── */}
       <Section alt>
-        <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
+        <Reveal as="h2" className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
           Try it for yourself
-        </h2>
-        <p className="mt-5 max-w-xl text-foreground/70">
+        </Reveal>
+        <Reveal as="p" delay={80} className="mt-5 max-w-xl text-foreground/70">
           Say hello to your newest employee - that never sleeps.
-        </p>
-        <div className="mt-10 rounded-2xl border border-[#212427]/10 bg-white p-8 text-center shadow-sm">
+        </Reveal>
+        <Reveal delay={140} className="card-lift mt-10 rounded-2xl border border-[#212427]/10 bg-white p-8 text-center shadow-sm">
           <Eyebrow>Live agent</Eyebrow>
           <div className="mt-3 font-serif text-4xl">(928) 988-9317</div>
           <div className="mt-7">
             <CallAgentButton>Call now</CallAgentButton>
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* ── HOW IT WORKS ──────────────────────────────────── */}
       <Section id="how">
-        <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
+        <Reveal as="h2" className="font-serif text-3xl leading-tight sm:text-4xl">
           How it works
-        </h2>
+        </Reveal>
         <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[
             ["1", "Caller asks for a part", "“You got front brake pads for a 2015 Camry?”"],
             ["2", "PartsPanda checks your inventory", "Understands the request, looks up live stock."],
             ["3", "It closes the loop", "Quotes price + availability, or takes the order."],
-          ].map(([n, title, body]) => (
-            <li key={n} className={cardClass}>
+          ].map(([n, title, body], i) => (
+            <Reveal as="li" key={n} delay={i * 110} className={cardClass}>
               <div className="font-serif text-2xl text-foreground/40">{n}</div>
               <div className="mt-3 font-bold">{title}</div>
               <div className="mt-1 text-sm text-foreground/60">{body}</div>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </Section>
 
       {/* ── PRICING ───────────────────────────────────────── */}
       <Section id="pricing" alt>
-        <h2 className="font-serif text-2xl leading-tight sm:text-4xl">
+        <Reveal as="h2" className="font-serif text-2xl leading-tight sm:text-4xl">
+          Never miss another inbound.
+        </Reveal>
+        <Reveal as="p" delay={80} className="mt-3 max-w-xl text-foreground/70">
           A single missed call could cost you more than a months subscription.
-        </h2>
-        <p className="mt-3 max-w-xl text-foreground/70">
-          Try free for 7 days, cancel anytime.
-        </p>
+        </Reveal>
+
         <div className="mt-12 grid grid-cols-1 items-stretch gap-6 lg:grid-cols-3">
-          {PLANS.map((plan) => (
-            <PlanCard key={plan.name} plan={plan} />
+          {PLANS.map((plan, i) => (
+            <Reveal key={plan.name} delay={i * 120} className="h-full">
+              <PlanCard plan={plan} />
+            </Reveal>
           ))}
         </div>
       </Section>
 
       {/* ── FINAL CTA ─────────────────────────────────────── */}
       <Section>
-        <h2 className="font-serif text-3xl leading-tight sm:text-5xl">
-          Never miss another order.
-        </h2>
-        <div className="mt-8">
+        <Reveal as="h2" className="font-serif text-3xl leading-tight sm:text-5xl">
+          Your always on phone staff.
+        </Reveal>
+        <Reveal delay={120} className="mt-8">
           <CallAgentButton />
-        </div>
+        </Reveal>
       </Section>
 
       {/* ── FOOTER ────────────────────────────────────────── */}
