@@ -188,7 +188,35 @@ that's the wow moment.
 
 ---
 
-## 7. Env / handoff
+## 7. Customer memory — returning-caller recall (retention) ⭐
+
+Recognize repeat callers, keyed by phone number. This is the retention lever:
+greet them by name and reference their last vehicle so they convert faster and
+come back more.
+
+### `customers` table
+| column        | type        | notes                          |
+|---------------|-------------|--------------------------------|
+| phone         | text pk     | caller's number (E.164)        |
+| name          | text null   | first name, if captured        |
+| last_vehicle  | text null   | `2009 Toyota Camry`            |
+| last_part     | text null   | last thing they asked for      |
+| updated_at    | timestamp   | last call                      |
+
+### Endpoints (two more, same contract style)
+- `GET /api/customer?phone=...` → the `customers` row or `null`. **Called at call start.**
+- `POST /api/customer` → upsert `{ phone, name, last_vehicle, last_part }`. **Called as the call ends.**
+
+### Flow
+- Vapi passes the caller's number on an inbound call. Look it up via `GET /api/customer`.
+- If found, inject it into the assistant's opening context so it can greet by name and
+  ask about `last_vehicle` — e.g. *"Thanks for calling — is this Mike? Calling about the
+  2009 Camry again?"*
+- On every call, **upsert** name / vehicle / part so memory stays current for next time.
+
+The frontend already showcases this (returning-caller demo on the landing page).
+
+## 8. Env / handoff
 Backend needs: Insforge URL + key, Nebius key, Vapi key + phone number.
 When live, give the frontend the **base URL** of your four endpoints — that's the only
 thing it needs from you.
@@ -200,4 +228,6 @@ thing it needs from you.
 2. Insforge tables + seed 40 SKUs + real `check_inventory`.
 3. Vapi assistant → Nebius custom-LLM → `check_inventory` + `capture_lead` tools.
 4. Log every call to `calls`, every miss to `leads`.
-5. VIN decode if time. Give frontend your base URL at integration.
+5. VIN decode if time.
+6. **Customer memory** — recognize returning callers by phone + recall their last
+   vehicle (section 7). The retention lever. Give frontend your base URL at integration.

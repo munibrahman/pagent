@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f3f2e6; /* page background */
+  --foreground: #212427; /* "black" text */
+  --surface-alt: #eceada; /* alternating section panel */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface-alt: var(--surface-alt);
+  --font-sans: var(--font-lato); /* body — Lato */
+  --font-serif: var(--font-hedvig); /* headers — Hedvig Letters Serif */
+}
+
+/* Theme is intentionally undecided — single light canvas for the wireframe pass.
+   Colors/fonts get chosen deliberately in the polish iteration. */
+
+/* Continuous right-to-left logo carousel. Track holds the list twice and
+   slides exactly -50% for a seamless loop. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Same track, reversed → second row scrolls the opposite way. */
+.animate-marquee-reverse {
+  animation: marquee 40s linear infinite reverse;
+}
+
+/* Hero call demo: each caption line rises in from the bottom. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 320ms ease-out both;
+}
+
+/* Voice waveform — bars bounce up and down (scale, so it works at any height). */
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-eq {
+  transform-origin: center;
+  animation: eq 900ms ease-in-out infinite;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
